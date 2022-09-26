@@ -1,0 +1,69 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+                <h1 class="h2">Controle de despesas</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <a class="btn btn-primary mr-3" href="/inserir_form" role="button">Adicionar despesa</a>
+                    <div class="btn-group me-2">
+                        <button type="button" class="btn btn-sm btn-outline-secondary">export excel</button>
+                    </div>
+                </div>
+</div>
+
+<div class="table-responsive">
+            <table class="table table-striped table-sm">
+            <thead>
+                <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Data</th>
+                <th scope="col">Centro de custo</th>
+                <th scope="col">Fornecedor</th>
+                <th scope="col">Valor</th>
+                <th scope="col">Status</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                    foreach($this->view->despesas as $key => $despesa) {
+                ?>
+                <tr>
+                <td><?= $despesa['id'] ?></td>
+                <td><?= $despesa['dt_lancamento'] ?></td>
+                <td><?= $despesa['centro_custo'] ?></td>
+                <td><?= $despesa['nome_fornecedor'] ?></td>
+                <td><?= $despesa['valor'] ?></td>
+
+                <?php
+                $status;
+                if ($despesa['status_pag'] == 1) {
+                    $status = 'Pago';
+                } else if($despesa['status_pag'] == 2) {
+                    $status = 'Pendente';
+                } else if ($despesa['status_pag'] == 3) {
+                    $status = 'Agendado';
+                } else {
+                    $status = 'Realizar acordo';
+                }
+                ?>
+                <td><?= $status ?></td>
+
+                <td>
+                    <form action="/editar_form?id=<?= $despesa['id'] ?>" method="post">
+                        <button class="border-0" type="submit"><i class="fa-solid fa-pen-to-square text-primary"></i></button>
+                    </form>
+                </td>
+
+                <td>
+                    <form action="/deletar?id=<?= $despesa['id'] ?>" method="post">
+                        <button class="border-0" type="submit"><i class="fa-solid fa-trash-can text-danger"></i></button>
+                    </form>
+                </td>
+
+                </tr>
+
+                <?php
+                    }
+                ?>
+            </tbody>
+            </table>
+</div>

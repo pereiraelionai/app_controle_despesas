@@ -1,0 +1,18 @@
+{
+    "name": "frame_mvc/vendor",
+    "require": {
+        "php": ">=7.0"
+    },
+    "authors": [
+        {
+            "name": "Elinai Pereira",
+            "email": "pereira.elionai92@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "App/",
+            "MF\\": "vendor/MF/"
+        }
+    }
+}

@@ -1,0 +1,38 @@
+<h1 class="display-3 mb-5">Cadastro de despesa</h1>
+<form method="post" action="/inserir">
+  <div class="form-row">
+    <div class="form-group col-md-7">
+      <label for="fornecedor">Fornecedor</label>
+      <input type="text" class="form-control" name="fornecedor" id="fornecedor" placeholder="Ex: Sabesp">
+    </div>
+    <div class="form-group col-md-3">
+      <label for="valor">Valor</label>
+      <input type="number" class="form-control" name="valor" id="valor" placeholder="Ex: R$ 12,90">
+    </div>
+    <div class="form-group col-md-2">
+    <label for="status">Status</label>
+    <select class="form-control" id="status" name="status">
+      <option value="">Selecione</option>
+      <option value="1">Pago</option>
+      <option value="2">Pendente</option>
+      <option value="3">Agendado</option>
+      <option value="4">Realizado acordo</option>
+    </select>
+  </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label for="centro_custo">Centro de Custo</label>
+      <input type="number" min="100000" step="100" class="form-control" name="centro_custo" id="centro_custo" placeholder="Ex: 100100">
+    </div>
+    <div class="form-group col-md-8">
+        <label for="nf">Nota Fiscal</label>
+        <input type="file" class="form-control-file" name="nf" id="nf">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="descricao">Descrição</label>
+    <textarea class="form-control" name="descricao" id="descricao" rows="3" placeholder="Justifique a despesa"></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Cadastrar</button>
+</form>

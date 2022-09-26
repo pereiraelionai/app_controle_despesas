@@ -1,0 +1,65 @@
+<h1 class="display-3 mb-5">Editar despesa</h1>
+<?php
+
+foreach($this->view->despesa as $key => $despesa_id) {
+
+?>
+<form method="post" action="/editar">
+  <div class="form-row">
+    <div class="form-group col-md-7">
+      <label for="fornecedor">Fornecedor</label>
+      <input type="hidden" name="id" value="<?= $despesa_id['id'] ?>">
+      <input type="text" class="form-control" value="<?= $despesa_id['nome_fornecedor'] ?>" name="fornecedor" id="fornecedor" placeholder="Ex: Sabesp">
+    </div>
+    <div class="form-group col-md-3">
+      <label for="valor">Valor</label>
+      <input type="number" class="form-control" value="<?= $despesa_id['valor'] ?>" name="valor" id="valor" placeholder="Ex: R$ 12,90">
+    </div>
+    <div class="form-group col-md-2">
+    <label for="status">Status</label>
+    <select class="form-control" id="status" name="status">
+      <option value="">Selecione</option>
+
+      <?php if ($despesa_id['status_pag'] == 1) { ?>
+      <option selected value="1">Pago</option>
+      <?php } else { ?>
+      <option  value="1">Pago</option>
+      <?php } ?>
+
+      <?php if ($despesa_id['status_pag'] == 2) { ?>
+      <option selected value="2">Pendente</option>
+      <?php } else { ?>
+      <option value="2">Pendente</option>
+      <?php } ?>
+
+      <?php if ($despesa_id['status_pag'] == 3) { ?>
+      <option selected value="3">Agendado</option>
+      <?php } else { ?>
+      <option value="3">Agendado</option>
+      <?php } ?>
+
+      <?php if ($despesa_id['status_pag'] == 4) { ?>
+      <option selected value="4">Realizado acordo</option>
+      <?php } else { ?>
+      <option value="4">Realizado acordo</option>
+      <?php } ?>
+    </select>
+  </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label for="centro_custo">Centro de Custo</label>
+      <input type="number" min="100000" step="100" value="<?= $despesa_id['centro_custo'] ?>" class="form-control" name="centro_custo" id="centro_custo" placeholder="Ex: 100100">
+    </div>
+    <div class="form-group col-md-8">
+        <label for="nf">Nota Fiscal</label>
+        <input type="file" class="form-control-file" name="nf" id="nf">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="descricao">Descrição</label>
+    <textarea class="form-control" name="descricao" id="descricao" rows="3" placeholder="Justifique a despesa"></textarea>
+  </div>
+  <button type="submit" class="btn btn-warning">Editar</button>
+</form>
+<?php }?>
