@@ -22,12 +22,31 @@ class Despesa extends Model {
     }
 
     //recuperando todos os dados do BD
-    public function getDespesas() {
-        $query = "select id, DATE_FORMAT(dt_lancamento, '%d/%m/%Y') as dt_lancamento, descricao, valor, nome_fornecedor, centro_custo, nf, status_pag from despesas ORDER BY id DESC";
+    public function getDespesas($limit, $offset) {
+        $query = "select id, DATE_FORMAT(dt_lancamento, '%d/%m/%Y') as dt_lancamento, descricao, valor, nome_fornecedor, centro_custo, nf, status_pag 
+        from despesas ORDER BY id DESC limit $limit offset $offset";
         $stmt = $this->db->prepare($query);
         $stmt->execute();
 
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public function getDespesasExport() {
+        $query = "select id, DATE_FORMAT(dt_lancamento, '%d/%m/%Y') as dt_lancamento, descricao, valor, nome_fornecedor, centro_custo, nf, status_pag 
+        from despesas ORDER BY id DESC";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }    
+
+    //contando registros para a paginação
+    public function getTotalDespesas() {
+        $query='select count(*) as total from despesas';
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 
     //recuperando despesa por id do BD
@@ -84,7 +103,8 @@ class Despesa extends Model {
     }
 
     public function search() {
-        $query = "select * from despesas where dt_lancamento like :data or centro_custo = :centro_custo or nome_fornecedor like :fornecedor or status_pag = :status or descricao like :descricao or id=:id";
+        $query = "select id, DATE_FORMAT(dt_lancamento, '%d/%m/%Y') as dt_lancamento, descricao, valor, nome_fornecedor, centro_custo, nf, status_pag
+         from despesas where dt_lancamento like :data or centro_custo = :centro_custo or nome_fornecedor like :fornecedor or status_pag = :status or descricao like :descricao or id=:id";
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(':descricao', $this->__get('descricao'));
         $stmt->bindValue(':fornecedor', $this->__get('nome_fornecedor'));

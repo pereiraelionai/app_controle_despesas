@@ -10,7 +10,19 @@ class IndexController extends Action  {
 
     public function index() {
         $despesa = Container::getModel('despesa');
-        $this->view->despesas = $despesa->getDespesas();
+
+        //variáveis de paginação
+        $total_registros_pagina = 15;
+        $pagina = isset($_GET['pagina']) ? $_GET['pagina'] : 1;
+        $deslocamento = ($pagina - 1) * $total_registros_pagina;
+        
+        $despesas =  $despesa->getDespesas($total_registros_pagina, $deslocamento);
+        $total_despesas = $despesa->getTotalDespesas();
+        $total_paginas = ceil($total_despesas['total']/$total_registros_pagina);
+        
+        $this->view->despesas = $despesas;
+        $this->view->total_paginas = $total_paginas;
+        $this->view->pagina_ativa = $pagina;
 
         $this->render('index.phtml');
     }
@@ -168,7 +180,7 @@ class IndexController extends Action  {
 
     public function exportar() {
         $despesas_obj = Container::getModel('despesa');
-        $despesas = $despesas_obj->getDespesas();
+        $despesas = $despesas_obj->getDespesasExport();
         $arquivo = 'despesas.xls';
 
         $table = '<table border="1">';
@@ -213,6 +225,8 @@ class IndexController extends Action  {
         header('Pragma: no-cache');
         header('Content-Type: application/x-msexcel');
         header("Content-Disposition: attachment; filename=\"{$arquivo}\"");
+
+        echo $table;
         
     }
 

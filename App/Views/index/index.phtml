@@ -73,7 +73,7 @@
                 } else if ($despesa['status_pag'] == 3) {
                     $status = 'Agendado';
                 } else {
-                    $status = 'Realizar acordo';
+                    $status = 'Realizado acordo';
                 }
                 ?>
                 <td><?= $status ?></td>
@@ -101,3 +101,24 @@
             </table>
 </div>
 <small>Clique na lupa para exibir os detalhes</small>
+<div class="row d-flex justify-content-center mt-5">
+				<nav aria-label="...">
+					<ul class="pagination">
+						<li class="page-item">
+							<a href="?pagina=1" class="page-link ">Primeira</a>
+						</li>
+
+						<?php for($i = 1; $i <= $this->view->total_paginas; $i++) { ?>
+
+						<li class="page-item  <?= $this->view->pagina_ativa == $i ? 'active' : ''?> " aria-current="page">
+							<a class="page-link" href="?pagina=<?= $i ?>"><?= $i ?></a>
+						</li>
+
+						<?php } ?>
+
+						<li class="page-item">
+							<a class="page-link" href="?pagina=<?= $this->view->total_paginas ?>">Última</a>
+						</li>
+					</ul>
+				</nav>
+	</div>
