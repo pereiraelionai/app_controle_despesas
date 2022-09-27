@@ -166,6 +166,57 @@ class IndexController extends Action  {
         $this->render('detalhes.phtml');
     }
 
+    public function exportar() {
+        $despesas_obj = Container::getModel('despesa');
+        $despesas = $despesas_obj->getDespesas();
+        $arquivo = 'despesas.xls';
+
+        $table = '<table border="1">';
+        $table .= '<tr>';
+        $table .= '<td colspan="7" align="center"><strong>Controle de Despesas</strong></td>';
+        $table .= '</tr>';
+        $table .='<tr>';
+        $table .= '<td>ID</td>';
+        $table .= '<td>Data</td>';
+        $table .= '<td>Centro de custo</td>';
+        $table .= '<td>Fornecedor</td>';
+        $table .= '<td>Valor</td>';
+        $table .= '<td>Status</td>';
+        $table .= '<td>Nota Fiscal</td>';
+        $table .= '</tr>';
+
+        foreach($despesas as $key => $despesa) {
+            $table .= '<tr>';
+            $table .= '<td>'. $despesa['id'] .'</td>';
+            $table .= '<td>'. $despesa['dt_lancamento'] .'</td>';
+            $table .= '<td>'. $despesa['centro_custo'] .'</td>';
+            $table .= '<td>'. $despesa['nome_fornecedor'] .'</td>';
+            $table .= '<td>'. $despesa['valor'] .'</td>';
+
+            if ($despesa['status_pag'] == 1) {
+            $table .= '<td>Pago</td>';
+            } else if ($despesa['status_pag'] == 2) {
+            $table .= '<td>Pendente</td>';
+            } else if ($despesa['status_pag'] == 3) {
+            $table .= '<td>Agendado</td>';
+            } else if ($despesa['status_pag'] == 4) {
+            $table .= '<td>Realizado acordo</td>';
+            }
+
+            $table .= '<td>'. $despesa['nf'] .'</td>';
+            $table .= '</tr>';
+        }
+
+        $table .= '</table>';
+
+        header('Cache-Control: no-cache, must-revalidate');
+        header('Pragma: no-cache');
+        header('Content-Type: application/x-msexcel');
+        header("Content-Disposition: attachment; filename=\"{$arquivo}\"");
+        
+        echo $table;
+    }
+
 }
 
 ?>

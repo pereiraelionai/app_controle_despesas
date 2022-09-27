@@ -54,6 +54,12 @@ class Route extends Bootstrap {
             'action' => 'detalhes'
         );        
 
+        $routes['exportar'] = array(
+            'route' => '/exportar',
+            'controller' => 'IndexController',
+            'action' => 'exportar'
+        );        
+
         $this->setRoutes($routes);
     }
 
