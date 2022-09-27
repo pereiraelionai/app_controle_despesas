@@ -214,7 +214,6 @@ class IndexController extends Action  {
         header('Content-Type: application/x-msexcel');
         header("Content-Disposition: attachment; filename=\"{$arquivo}\"");
         
-        echo $table;
     }
 
 }

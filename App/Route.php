@@ -58,7 +58,7 @@ class Route extends Bootstrap {
             'route' => '/exportar',
             'controller' => 'IndexController',
             'action' => 'exportar'
-        );        
+        );       
 
         $this->setRoutes($routes);
     }
