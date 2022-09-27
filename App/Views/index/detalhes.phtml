@@ -1,0 +1,57 @@
+<?php
+foreach($this->view->despesas as $key => $despesa) {
+?>
+<h1 class="mt-3 mb-4">Controle de Despesas (Detalhes)</h1>
+<div class="row">
+    <div class="col-md-3">
+        <h4>ID: </h4><p><?= $despesa['id'] ?></p>
+    </div>    
+    <div class="col-md-5">
+        <h4>Data: </h4><p><?= $despesa['dt_lancamento'] ?></p>
+    </div>
+    <div class="col-md-2">
+        <h4>Status: </h4>
+        <?php if ($despesa['status_pag'] == 1) {  ?>
+            <p>Pago</p>
+        <?php } else if ($despesa['status_pag'] == 2) { ?>
+            <p>Pendente</p>
+        <?php } else if ($despesa['status_pag'] == 3) {?>
+            <p>Agendado</p>
+        <?php } else if ($despesa['status_pag'] == 4) {?>
+            <p>Realizado acordo</p>
+        <?php }?>            
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-md">
+        <h4>Centro de Custo: </h4><p><?= $despesa['centro_custo'] ?></p>
+    </div>
+    <div class="col-md">
+        <h4>Fornecedor: </h4><p><?= $despesa['nome_fornecedor'] ?></p>
+    </div>
+    <div class="col-md">
+        <h4>Valor: </h4><p>R$ <?php echo str_replace('.', ',', $despesa['valor']) ?></p>
+    </div>        
+</div>
+<div class="row">
+    <div class="col-md">
+        <h4>Descrição:</h4>
+        <p><?= $despesa['descricao'] ?></p>
+    </div>
+</div>
+<div class="row mt-5">
+    <div class="col-md-1">
+        <form action="/editar_form?id=<?= $despesa['id'] ?>" method="post">
+            <button class="border-0 btn btn-warning" type="submit">Editar</i></button>
+        </form>
+    </div>
+    <div class="col-md-1">
+        <form action="/deletar?id=<?= $despesa['id'] ?>" method="post">
+            <button class="border-0 btn btn-danger" type="submit">Deletar</i></button>
+        </form>
+    </div>
+</div>
+<?php
+}
+?>

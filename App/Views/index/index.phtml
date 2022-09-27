@@ -50,6 +50,7 @@
                 <th scope="col">Status</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
+                <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
@@ -61,7 +62,7 @@
                 <td><?= $despesa['dt_lancamento'] ?></td>
                 <td><?= $despesa['centro_custo'] ?></td>
                 <td><?= $despesa['nome_fornecedor'] ?></td>
-                <td><?= $despesa['valor'] ?></td>
+                <td>R$ <?php echo str_replace('.', ',', $despesa['valor']) ?></td>
 
                 <?php
                 $status;
@@ -76,6 +77,8 @@
                 }
                 ?>
                 <td><?= $status ?></td>
+
+                <td><a class="mr-2" href="/detalhes?id=<?= $despesa['id'] ?>"><i class="fa-solid fa-magnifying-glass text-success"></i></a></td>
 
                 <td>
                     <form action="/editar_form?id=<?= $despesa['id'] ?>" method="post">
@@ -97,4 +100,4 @@
             </tbody>
             </table>
 </div>
-<small>Clique na despesa para exibir os detalhes</small>
+<small>Clique na lupa para exibir os detalhes</small>

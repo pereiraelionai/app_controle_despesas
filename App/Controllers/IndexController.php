@@ -47,7 +47,7 @@ class IndexController extends Action  {
             $despesa->__set('descricao', $descricao);
     
             $despesa->insertDespesa();
-    
+   
             header('Location: /');
         } else {
             header('Location: /inserir_form?fornecedor='.$_POST['fornecedor'].'&valor='.$_POST['valor'].'&status='.$_POST['status'].'&centro_custo='.$_POST['centro_custo'].'&nf='.$_POST['nf'].'&descricao='.$_POST['descricao']);
@@ -133,6 +133,14 @@ class IndexController extends Action  {
 
         $this->render('busca.phtml');
 
+    }
+
+    public function detalhes() {
+        $despesa = Container::getModel('despesa');
+        $despesa->__set('id', $_GET['id']);
+        $this->view->despesas = $despesa->getDespesasId();
+
+        $this->render('detalhes.phtml');
     }
 
 }
