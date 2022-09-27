@@ -1,5 +1,5 @@
 <h1 class="h2 mt-3 mb-5">Cadastro de despesa</h1>
-<form method="post" action="/inserir">
+<form method="post" action="/inserir" enctype="multipart/form-data">
   <div class="form-row">
     <div class="form-group col-md-7">
       <!--Validação campo forncedor-->
@@ -80,12 +80,12 @@
     <div class="form-group col-md-8">
         <label for="nf">Nota Fiscal</label>
         <?php if(isset($_GET['nf']) && empty($_GET['nf'])) {?>
-          <input type="file" class="form-control-file is-invalid" name="nf" id="nf">
+          <input type="file" class="form-control-file is-invalid" name="nf" id="nf" accept="image/*">
         <div class="invalid-feedback">
           Insira a Nota Fiscal.
         </div>
       <?php } else {?>
-        <input type="file" class="form-control-file" name="nf" id="nf">
+        <input type="file" class="form-control-file" name="nf" id="nf" accept="image/*">
       <?php }?>
     </div>
   </div>

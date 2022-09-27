@@ -40,6 +40,12 @@ foreach($this->view->despesas as $key => $despesa) {
         <p><?= $despesa['descricao'] ?></p>
     </div>
 </div>
+<div class="row">
+    <div class="col-md">
+        <h4>Nota Fiscal</h4>
+        <img src="/assets/notas_fiscais/<?=$despesa['nf']?>" width="200">
+    </div>
+</div>
 <div class="row mt-5">
     <div class="col-md-1">
         <form action="/editar_form?id=<?= $despesa['id'] ?>" method="post">

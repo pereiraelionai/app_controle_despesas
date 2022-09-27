@@ -30,14 +30,25 @@ class IndexController extends Action  {
 
     public function inserir() {
         //validação de formulário e insersão do registro
-        if($_POST['fornecedor'] != '' && $_POST['valor'] != '' && is_numeric(str_replace(',', '.', $_POST['valor'])) && $_POST['status'] != '' && $_POST['centro_custo'] != '' && $_POST['descricao'] != '' && $_POST['nf'] != '') {
+        if($_POST['fornecedor'] != '' && $_POST['valor'] != '' && is_numeric(str_replace(',', '.', $_POST['valor'])) && $_POST['status'] != '' && $_POST['centro_custo'] != '' && $_POST['descricao'] != '' && $_FILES['nf']['name'] != '') {
             $fornecedor = $_POST['fornecedor'];
             $valor = str_replace(',', '.', $_POST['valor']);
             $status = $_POST['status'];
             $centro_custo = $_POST['centro_custo'];
-            $nf = $_POST['nf'];
             $descricao = $_POST['descricao'];
-    
+
+            //Armazenando imagem no public
+            if(isset($_FILES['nf']))
+            {
+              $ext = strtolower(substr($_FILES['nf']['name'],-4)); //Pegando extensão do arquivo
+              $new_name = date("Y.m.d-H.i.s") . $ext; //Definindo um novo nome para o arquivo
+              $dir = './assets/notas_fiscais/'; //Diretório para uploads
+         
+              move_uploaded_file($_FILES['nf']['tmp_name'], $dir.$new_name); //Fazer upload do arquivo
+            }
+            $nf = $new_name;
+
+            //set no model
             $despesa = Container::getModel('despesa');
             $despesa->__set('nome_fornecedor', $fornecedor);
             $despesa->__set('valor', $valor);
@@ -49,8 +60,9 @@ class IndexController extends Action  {
             $despesa->insertDespesa();
    
             header('Location: /');
+            
         } else {
-            header('Location: /inserir_form?fornecedor='.$_POST['fornecedor'].'&valor='.$_POST['valor'].'&status='.$_POST['status'].'&centro_custo='.$_POST['centro_custo'].'&nf='.$_POST['nf'].'&descricao='.$_POST['descricao']);
+            header('Location: /inserir_form?fornecedor='.$_POST['fornecedor'].'&valor='.$_POST['valor'].'&status='.$_POST['status'].'&centro_custo='.$_POST['centro_custo'].'&descricao='.$_POST['descricao'].'&nf='.$_FILES['nf']['name']);
         }
 
     }
@@ -75,15 +87,26 @@ class IndexController extends Action  {
         $valor = str_replace(',', '.', $_POST['valor']);
         $status = $_POST['status'];
         $centro_custo = $_POST['centro_custo'];
-        $nf = $_POST['nf'];
         $descricao = $_POST['descricao'];
         $id = $_POST['id'];
 
         //validação de formulário e insersão do registro
-        if($_POST['fornecedor'] != '' && $_POST['valor'] != '' && is_numeric(str_replace(',', '.', $_POST['valor'])) && $_POST['status'] != '' && $_POST['centro_custo'] != '' && $_POST['descricao'] != '' && $_POST['nf'] != '') {
+        if($_POST['fornecedor'] != '' && $_POST['valor'] != '' && is_numeric(str_replace(',', '.', $_POST['valor'])) && $_POST['status'] != '' && $_POST['centro_custo'] != '' && $_POST['descricao'] != '' && $_FILES['nf']['name'] != '') {
             //destruindo sessão anterior
             session_start();
             session_destroy();
+
+            //Armazenando imagem no public
+            if(isset($_FILES['nf']))
+            {
+              $ext = strtolower(substr($_FILES['nf']['name'],-4)); //Pegando extensão do arquivo
+              $new_name = date("Y.m.d-H.i.s") . $ext; //Definindo um novo nome para o arquivo
+              $dir = './assets/notas_fiscais/'; //Diretório para uploads
+         
+              move_uploaded_file($_FILES['nf']['tmp_name'], $dir.$new_name); //Fazer upload do arquivo
+            }
+            $nf = $new_name;
+
             $despesa->__set('id', $id);
             $despesa->__set('nome_fornecedor', $fornecedor);
             $despesa->__set('valor', $valor);
@@ -98,7 +121,7 @@ class IndexController extends Action  {
 
         } else {
 
-            header('Location: /editar_form?fornecedor='.$_POST['fornecedor'].'&valor='.$_POST['valor'].'&status='.$_POST['status'].'&centro_custo='.$_POST['centro_custo'].'&nf='.$_POST['nf'].'&descricao='.$_POST['descricao']);
+            header('Location: /editar_form?fornecedor='.$_POST['fornecedor'].'&valor='.$_POST['valor'].'&status='.$_POST['status'].'&centro_custo='.$_POST['centro_custo'].'&nf='.$_FILES['nf']['name'].'&descricao='.$_POST['descricao']);
         }
         
     }
