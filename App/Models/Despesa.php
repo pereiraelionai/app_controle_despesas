@@ -23,7 +23,7 @@ class Despesa extends Model {
 
     //recuperando todos os dados do BD
     public function getDespesas() {
-        $query = 'select * from despesas ORDER BY dt_lancamento DESC';
+        $query = "select id, DATE_FORMAT(dt_lancamento, '%d/%m/%Y') as dt_lancamento, descricao, valor, nome_fornecedor, centro_custo, nf, status_pag from despesas ORDER BY id DESC";
         $stmt = $this->db->prepare($query);
         $stmt->execute();
 
@@ -81,6 +81,20 @@ class Despesa extends Model {
         $stmt->execute();
 
         return $this;
+    }
+
+    public function search() {
+        $query = "select * from despesas where dt_lancamento like :data or centro_custo = :centro_custo or nome_fornecedor like :fornecedor or status_pag = :status or descricao like :descricao or id=:id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':descricao', $this->__get('descricao'));
+        $stmt->bindValue(':fornecedor', $this->__get('nome_fornecedor'));
+        $stmt->bindValue(':centro_custo', $this->__get('centro_custo'));
+        $stmt->bindValue(':data', $this->__get('dt_lancamento'));
+        $stmt->bindValue(':status', $this->__get('status_pag'));
+        $stmt->bindValue(':id', $this->__get('id'));
+        $stmt->execute();
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 }
 

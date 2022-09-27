@@ -1,38 +1,111 @@
-<h1 class="display-3 mb-5">Cadastro de despesa</h1>
+<h1 class="h2 mt-3 mb-5">Cadastro de despesa</h1>
 <form method="post" action="/inserir">
   <div class="form-row">
     <div class="form-group col-md-7">
+      <!--Validação campo forncedor-->
       <label for="fornecedor">Fornecedor</label>
-      <input type="text" class="form-control" name="fornecedor" id="fornecedor" placeholder="Ex: Sabesp">
+      <?php if(isset($_GET['fornecedor']) && empty($_GET['fornecedor'])) {?>
+        <input type="text" class="form-control is-invalid" name="fornecedor" id="fornecedor" placeholder="Ex: Sabesp">
+        <div class="invalid-feedback">
+          Fornecedor não pode estar vazio.
+        </div>
+      <?php } else {?>
+      <input type="text" class="form-control <?=$class?>" name="fornecedor" id="fornecedor" placeholder="Ex: Sabesp">
+      <?php }?>
     </div>
+
+
+    <!--Validação campo valor-->
     <div class="form-group col-md-3">
       <label for="valor">Valor</label>
-      <input type="number" class="form-control" name="valor" id="valor" placeholder="Ex: R$ 12,90">
+      <?php if(isset($_GET['valor']) && empty($_GET['valor'])) {?>
+        <input type="text" class="form-control is-invalid" name="valor" id="valor" placeholder="Ex: R$ 12,90">
+        <div class="invalid-feedback">
+          Revise o valor digitado.
+        </div>
+      <?php } else if (isset($_GET['valor']) && !is_numeric($_GET['valor'])) {?>
+        <input type="text" class="form-control is-invalid" name="valor" id="valor" placeholder="Ex: R$ 12,90">
+        <div class="invalid-feedback">
+          Revise o valor digitado.
+        </div>
+      <?php } else {?>
+        <input type="text" class="form-control" name="valor" id="valor" placeholder="Ex: R$ 12,90">
+      <?php }?>
     </div>
+
+
+
+    <!--Validação campo status-->
     <div class="form-group col-md-2">
     <label for="status">Status</label>
-    <select class="form-control" id="status" name="status">
-      <option value="">Selecione</option>
-      <option value="1">Pago</option>
-      <option value="2">Pendente</option>
-      <option value="3">Agendado</option>
-      <option value="4">Realizado acordo</option>
-    </select>
+    <?php if(isset($_GET['status']) && empty($_GET['status'])) {?>
+        <select class="form-control is-invalid" id="status" name="status">
+        <option value="">Selecione</option>
+        <option value="1">Pago</option>
+        <option value="2">Pendente</option>
+        <option value="3">Agendado</option>
+        <option value="4">Realizado acordo</option>
+        </select>
+        <div class="invalid-feedback">
+          Status não pode estar vazio.
+        </div>
+      <?php } else {?>
+        <select class="form-control" id="status" name="status">
+        <option value="">Selecione</option>
+        <option value="1">Pago</option>
+        <option value="2">Pendente</option>
+        <option value="3">Agendado</option>
+        <option value="4">Realizado acordo</option>
+      </select>
+      <?php }?>
+   
   </div>
   </div>
   <div class="form-row">
+
+    <!--Validação campo centro de custo-->
     <div class="form-group col-md-4">
       <label for="centro_custo">Centro de Custo</label>
-      <input type="number" min="100000" step="100" class="form-control" name="centro_custo" id="centro_custo" placeholder="Ex: 100100">
+      <?php if(isset($_GET['centro_custo']) && empty($_GET['centro_custo'])) {?>
+        <input type="number" min="100000" step="100" class="form-control is-invalid" name="centro_custo" id="centro_custo" placeholder="Ex: 100100">
+        <div class="invalid-feedback">
+          Centro de custo não pode estar vazio.
+        </div>
+      <?php } else {?>
+        <input type="number" min="100000" step="100" class="form-control" name="centro_custo" id="centro_custo" placeholder="Ex: 100100">
+      <?php }?>
     </div>
+
+    <!--Validação campo nota fiscal-->
     <div class="form-group col-md-8">
         <label for="nf">Nota Fiscal</label>
+        <?php if(isset($_GET['nf']) && empty($_GET['nf'])) {?>
+          <input type="file" class="form-control-file is-invalid" name="nf" id="nf">
+        <div class="invalid-feedback">
+          Insira a Nota Fiscal.
+        </div>
+      <?php } else {?>
         <input type="file" class="form-control-file" name="nf" id="nf">
+      <?php }?>
+
+
+
     </div>
+
+
   </div>
   <div class="form-group">
+
+    <!--Validação campo nota fiscal-->
     <label for="descricao">Descrição</label>
-    <textarea class="form-control" name="descricao" id="descricao" rows="3" placeholder="Justifique a despesa"></textarea>
+    <?php if(isset($_GET['descricao']) && empty($_GET['descricao'])) {?>
+      <textarea class="form-control is-invalid" name="descricao" id="descricao" rows="3" placeholder="Justifique a despesa"></textarea>
+        <div class="invalid-feedback">
+          Preencha a descrição.
+        </div>
+      <?php } else {?>
+        <textarea class="form-control" name="descricao" id="descricao" rows="3" placeholder="Justifique a despesa"></textarea>
+      <?php }?>
   </div>
   <button type="submit" class="btn btn-primary">Cadastrar</button>
 </form>
